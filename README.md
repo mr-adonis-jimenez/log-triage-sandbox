@@ -1,6 +1,6 @@
 # Log Triage Sandbox
 
-A TypeScript-based log triage sandbox application for parsing, filtering, and managing log entries in a development environment.
+A Python-based log triage sandbox application for parsing, filtering, and managing log entries in a development environment.
 
 ## Features
 
