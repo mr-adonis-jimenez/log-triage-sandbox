@@ -48,4 +48,4 @@ The following types of issues are considered out of scope:
 * Reports from automated scanners with no manual validation or proof-of-concept.
 * Vulnerabilities related to GitHub's infrastructure (please report those to GitHub directly).
 
-We look forward to working with you to keep `log-triage-sandbox` secure.
+We look forward to working with you to keep `Log Triage Sandbox` secure.
