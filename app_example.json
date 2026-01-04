@@ -1,0 +1,3 @@
+{"timestamp":"2025-01-20T12:00:00Z","level":"INFO","message":"HTTP request","path":"/","status":200}
+{"timestamp":"2025-01-20T12:00:01Z","level":"ERROR","message":"DB connection failed","error_code":"DB_CONN"}
+{"timestamp":"2025-01-20T12:01:00Z","level":"WARN","message":"Slow query","duration_ms":1234}
