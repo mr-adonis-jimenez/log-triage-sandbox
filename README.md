@@ -195,8 +195,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [React](https://reactjs.org/)
 
 ## 📧 Support
-
-- 📫 Email: support@logtriage.dev
+-
 - 🐛 Issues: [GitHub Issues](https://github.com/mr-adonis-jimenez/log-triage-sandbox/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/mr-adonis-jimenez/log-triage-sandbox/discussions)
 
