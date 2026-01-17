@@ -1,0 +1,27 @@
+name: Log Triage Sandbox
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run job with log capture
+        run: |
+          bash scripts/capture.sh python sandbox/reproduce.py || true
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-logs
+          path: logs/raw
+
+          - name: Claude Code Action Official
+          - uses: anthropics/claude-code-action@v1

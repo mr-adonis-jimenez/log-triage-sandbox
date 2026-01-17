@@ -1,0 +1,5 @@
+2025-01-20 12:00:00,123 INFO  Starting application
+2025-01-20 12:00:01,456 DEBUG Loading configuration
+2025-01-20 12:01:00,789 WARN  Cache miss for key=user:123
+2025-01-20 12:02:10,000 ERROR Failed to connect to database
+2025-01-20 12:03:05,321 INFO  Request completed status=200 path=/api/v1/items

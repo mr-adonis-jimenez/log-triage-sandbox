@@ -1,24 +1,26 @@
+// package.json
 {
   "name": "log-triage-sandbox",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "engines": {
-    "node": ">=18"
-  },
+  "version": "1.0.0",
+  "description": "A TypeScript-based log triage sandbox application for parsing, filtering, and managing log entries",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json && node dist/postbuild.cjs",
-    "dev": "tsx src/cli.ts --in sample-logs/*.log --rules rules.example.json --out out",
-    "triage": "node dist/cli.js --in 'sample-logs/*.log' --rules rules.example.json --out out",
-    "report": "node dist/report.js --json out/triage.json --out docs",
-    "test": "vitest run",
-    "fmt": "prettier . --write",
-    "lint": "eslint . --ext .ts"
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\""
   },
-  "dependencies": {
-    "fast-glob": "^3.3.2",
-    "yargs": "^17.7.2"
-  },
+  "keywords": [
+    "logs",
+    "triage",
+    "monitoring",
+    "typescript",
+    "sandbox"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.30",
     "@types/yargs": "^17.0.33",
