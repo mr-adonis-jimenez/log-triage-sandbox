@@ -350,6 +350,17 @@ const LogTriageSandbox = () => {
                   <div>
                     <div className="text-sm text-gray-400">Message</div>
                     <div className="text-white">{selectedLog.message}</div>
+                    // src/components/LogTriageSandbox.jsx
+export function LogRow({ event }) {
+  return (
+    <div className={`log log-${event.level.toLowerCase()}`}>
+      <strong>{event.level}</strong>
+      <span>{event.source}</span>
+      <pre>{event.message}</pre>
+    </div>
+  );
+}
+
                   </div>
 
                   {selectedLog.traceId && (
