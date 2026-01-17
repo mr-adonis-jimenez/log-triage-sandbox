@@ -25,7 +25,7 @@ jobs:
         node-version: '20'
         cache: 'npm'
       
-      - name: Build artifactsSetup Node.js and build React app
+          - name: Build and package React app
       run: |
         # Install Node.js dependencies
         npm ci
