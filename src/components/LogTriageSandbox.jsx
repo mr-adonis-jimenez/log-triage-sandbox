@@ -1,4 +1,3 @@
-```jsx
 import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, Upload, Download, BarChart3, Calendar, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { parseLogFile } from '../utils/logParser';
@@ -25,7 +24,7 @@ const LogTriageSandbox = () => {
     return logs.filter(log => {
       // Search filter
       const searchLower = searchQuery.toLowerCase();
-      const matchesSearch = !searchQuery || 
+      const matchesSearch = !searchQuery ||
         log.message.toLowerCase().includes(searchLower) ||
         log.service.toLowerCase().includes(searchLower) ||
         log.traceId.toLowerCase().includes(searchLower);
@@ -35,7 +34,7 @@ const LogTriageSandbox = () => {
 
       // Date range filter
       const logDate = new Date(log.timestamp);
-      const matchesDateRange = 
+      const matchesDateRange =
         (!dateRange.start || logDate >= new Date(dateRange.start)) &&
         (!dateRange.end || logDate <= new Date(dateRange.end));
 
@@ -62,10 +61,14 @@ const LogTriageSandbox = () => {
     });
 
     const topServices = Object.entries(serviceCounts)
-      .sort((a, b) => b [github](https://github.com/mr-adonis-jimenez/Log-Triage-Sandbox/blob/main/README.md) - a [github](https://github.com/mr-adonis-jimenez/Log-Triage-Sandbox/blob/main/README.md))
+      .sort((a, b) => b[1] - a[1])
       .slice(0, 5);
 
-    return { levelCounts, topServices, total: filteredLogs.length };
+    return {
+      levelCounts,
+      topServices,
+      total: filteredLogs.length
+    };
   }, [filteredLogs]);
 
   // Handle file upload
@@ -85,7 +88,7 @@ const LogTriageSandbox = () => {
 
   // Handle export
   const handleExport = () => {
-    const dataStr = filteredLogs.map(log => JSON.stringify(log)).join('\n');
+    const dataStr = filteredLogs.map(log => JSON.stringify(log)).join('\\n');
     const dataBlob = new Blob([dataStr], { type: 'application/jsonl' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
@@ -97,8 +100,8 @@ const LogTriageSandbox = () => {
 
   // Toggle level filter
   const toggleLevel = (level) => {
-    setSelectedLevels(prev => 
-      prev.includes(level) 
+    setSelectedLevels(prev =>
+      prev.includes(level)
         ? prev.filter(l => l !== level)
         : [...prev, level]
     );
@@ -121,39 +124,36 @@ const LogTriageSandbox = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-900 text-white p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Log Triage Sandbox 🔍
-          </h1>
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl font-bold">Log Triage Sandbox 🔍</h1>
           <p className="text-gray-400">Interactive environment for analyzing application logs</p>
         </div>
 
         {/* Controls */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-6 shadow-xl">
+        <div className="bg-gray-800 rounded-lg p-6 space-y-4">
           {/* Search Bar */}
-          <div className="mb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search logs (message, service, trace ID)..."
-                className="w-full bg-gray-700 text-white pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-              />
-            </div>
+          <div className="relative">
+            <Search className="absolute left-3 top-3.5 text-gray-400" size={20} />
+            <input
+              type="text"
+              placeholder="Search logs (message, service, trace ID)..."
+              className="w-full bg-gray-700 text-white pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
           </div>
 
           {/* Filters Row */}
           <div className="flex flex-wrap gap-4 items-center">
             {/* Level Filters */}
             <div className="flex gap-2">
+              <Filter size={20} className="text-gray-400 my-auto" />
               {['ERROR', 'WARN', 'INFO', 'DEBUG'].map(level => (
                 <button
                   key={level}
@@ -170,7 +170,7 @@ const LogTriageSandbox = () => {
             </div>
 
             {/* Date Range */}
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Calendar size={20} className="text-gray-400" />
               <input
                 type="date"
@@ -189,39 +189,35 @@ const LogTriageSandbox = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-2 ml-auto">
-              <label className="cursor-pointer">
+              <label className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg cursor-pointer transition-colors">
+                <Upload size={20} />
+                Upload
                 <input
                   type="file"
                   accept=".log,.txt,.jsonl"
                   className="hidden"
                   onChange={handleFileUpload}
                 />
-                <div className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
-                  <Upload size={20} />
-                  <span>Upload</span>
-                </div>
               </label>
-
               <button
                 onClick={handleExport}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
               >
                 <Download size={20} />
-                <span>Export</span>
+                Export
               </button>
-
               <button
                 onClick={() => setShowStats(!showStats)}
                 className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
               >
                 <BarChart3 size={20} />
-                <span>{showStats ? 'Hide' : 'View'} Stats</span>
+                {showStats ? 'Hide' : 'View'} Stats
               </button>
             </div>
           </div>
 
           {/* Results Count */}
-          <div className="mt-4 text-gray-400 text-sm">
+          <div className="text-sm text-gray-400">
             Showing {paginatedLogs.length} of {filteredLogs.length} logs
             {filteredLogs.length !== logs.length && ` (filtered from ${logs.length} total)`}
           </div>
@@ -229,79 +225,75 @@ const LogTriageSandbox = () => {
 
         {/* Statistics Panel */}
         {showStats && (
-          <div className="bg-gray-800 rounded-lg p-6 mb-6 shadow-xl">
-            <h2 className="text-2xl font-bold mb-4">Statistics</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Level Distribution */}
-              <div>
-                <h3 className="text-lg font-semibold mb-3 text-gray-300">Log Level Distribution</h3>
-                <div className="space-y-2">
-                  {Object.entries(stats.levelCounts).map(([level, count]) => (
-                    <div key={level} className="flex items-center gap-3">
-                      <span className={`px-3 py-1 rounded text-sm font-medium ${levelColors[level]}`}>
-                        {level}
-                      </span>
-                      <div className="flex-1 bg-gray-700 rounded-full h-6">
-                        <div
-                          className={`h-full rounded-full ${levelColors[level]}`}
-                          style={{ width: `${(count / stats.total) * 100}%` }}
-                        />
-                      </div>
-                      <span className="text-gray-400 text-sm w-16 text-right">{count}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="bg-gray-800 rounded-lg p-6 space-y-4">
+            <h2 className="text-2xl font-bold">Statistics</h2>
 
-              {/* Top Services */}
-              <div>
-                <h3 className="text-lg font-semibold mb-3 text-gray-300">Top 5 Services</h3>
-                <div className="space-y-2">
-                  {stats.topServices.map(([service, count]) => (
-                    <div key={service} className="flex items-center gap-3">
-                      <span className="text-blue-400 font-medium flex-1 truncate">{service}</span>
-                      <span className="text-gray-400 text-sm">{count} logs</span>
-                    </div>
-                  ))}
-                </div>
+            {/* Level Distribution */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-300">Log Level Distribution</h3>
+              <div className="grid grid-cols-4 gap-3">
+                {Object.entries(stats.levelCounts).map(([level, count]) => (
+                  <div
+                    key={level}
+                    className={`p-4 rounded-lg border ${levelColors[level]}`}
+                  >
+                    <div className="text-sm font-medium">{level}</div>
+                    <div className="text-2xl font-bold mt-1">{count}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Services */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-300">Top 5 Services</h3>
+              <div className="space-y-2">
+                {stats.topServices.map(([service, count]) => (
+                  <div
+                    key={service}
+                    className="flex justify-between items-center bg-gray-700 p-3 rounded-lg"
+                  >
+                    <span className="font-medium">{service}</span>
+                    <span className="text-gray-400">{count} logs</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )}
 
         {/* Logs List */}
-        <div className="space-y-2 mb-6">
+        <div className="space-y-3">
           {paginatedLogs.map((log, index) => (
             <div
               key={index}
               onClick={() => setSelectedLog(log)}
               className="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 cursor-pointer transition-all hover:shadow-lg border border-gray-700 hover:border-gray-600"
             >
-              <div className="flex items-start gap-4">
-                <span className={`px-3 py-1 rounded text-sm font-medium ${levelColors[log.level]} border`}>
+              <div className="flex items-center gap-3 mb-2">
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${levelColors[log.level]}`}>
                   {log.level}
                 </span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-gray-400 text-sm">
-                      {new Date(log.timestamp).toLocaleString()}
-                    </span>
-                    <span className="text-blue-400 text-sm font-medium">{log.service}</span>
-                  </div>
-                  <p className="text-white truncate">{log.message}</p>
-                  {log.traceId && (
-                    <span className="text-gray-500 text-xs">Trace: {log.traceId}</span>
-                  )}
-                </div>
-                <ChevronDown size={20} className="text-gray-400 flex-shrink-0" />
+                <span className="text-sm text-gray-400">
+                  {new Date(log.timestamp).toLocaleString()}
+                </span>
+                <span className="text-sm text-blue-400">
+                  {log.service}
+                </span>
               </div>
+              <p className="text-sm text-gray-300">{log.message}</p>
+              {log.traceId && (
+                <p className="text-xs text-gray-500 mt-2">
+                  Trace: {log.traceId}
+                </p>
+              )}
             </div>
           ))}
         </div>
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mb-6">
+          <div className="flex justify-center items-center gap-4 bg-gray-800 rounded-lg p-4">
             <button
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
@@ -309,7 +301,7 @@ const LogTriageSandbox = () => {
             >
               Previous
             </button>
-            <span className="px-4 py-2 bg-gray-800 rounded-lg">
+            <span className="text-gray-400">
               Page {currentPage} of {totalPages}
             </span>
             <button
@@ -324,58 +316,65 @@ const LogTriageSandbox = () => {
 
         {/* Log Detail Modal */}
         {selectedLog && (
-          <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-6 z-50">
-            <div className="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Log Details</h2>
-                <button
-                  onClick={() => setSelectedLog(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <span className="text-gray-400 text-sm">Timestamp</span>
-                  <p className="text-white">{new Date(selectedLog.timestamp).toLocaleString()}</p>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-gray-800 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+              <div className="p-6 space-y-4">
+                <div className="flex justify-between items-start">
+                  <h2 className="text-2xl font-bold">Log Details</h2>
+                  <button
+                    onClick={() => setSelectedLog(null)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
                 </div>
-                <div>
-                  <span className="text-gray-400 text-sm">Level</span>
-                  <p><span className={`px-3 py-1 rounded text-sm font-medium ${levelColors[selectedLog.level]}`}>
-                    {selectedLog.level}
-                  </span></p>
-                </div>
-                <div>
-                  <span className="text-gray-400 text-sm">Service</span>
-                  <p className="text-white font-medium">{selectedLog.service}</p>
-                </div>
-                <div>
-                  <span className="text-gray-400 text-sm">Message</span>
-                  <p className="text-white whitespace-pre-wrap">{selectedLog.message}</p>
-                </div>
-                {selectedLog.traceId && (
+
+                <div className="space-y-3">
                   <div>
-                    <span className="text-gray-400 text-sm">Trace ID</span>
-                    <p className="text-white font-mono text-sm">{selectedLog.traceId}</p>
+                    <div className="text-sm text-gray-400">Timestamp</div>
+                    <div className="text-white">{new Date(selectedLog.timestamp).toLocaleString()}</div>
                   </div>
-                )}
-                {selectedLog.userId && (
+
                   <div>
-                    <span className="text-gray-400 text-sm">User ID</span>
-                    <p className="text-white font-mono text-sm">{selectedLog.userId}</p>
+                    <div className="text-sm text-gray-400">Level</div>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${levelColors[selectedLog.level]}`}>
+                      {selectedLog.level}
+                    </span>
                   </div>
-                )}
-                {selectedLog.metadata && (
+
                   <div>
-                    <span className="text-gray-400 text-sm">Metadata</span>
-                    <div className="bg-gray-900 p-4 rounded mt-2">
-                      <pre className="text-sm text-gray-300">
+                    <div className="text-sm text-gray-400">Service</div>
+                    <div className="text-white">{selectedLog.service}</div>
+                  </div>
+
+                  <div>
+                    <div className="text-sm text-gray-400">Message</div>
+                    <div className="text-white">{selectedLog.message}</div>
+                  </div>
+
+                  {selectedLog.traceId && (
+                    <div>
+                      <div className="text-sm text-gray-400">Trace ID</div>
+                      <div className="text-white font-mono text-sm">{selectedLog.traceId}</div>
+                    </div>
+                  )}
+
+                  {selectedLog.userId && (
+                    <div>
+                      <div className="text-sm text-gray-400">User ID</div>
+                      <div className="text-white font-mono text-sm">{selectedLog.userId}</div>
+                    </div>
+                  )}
+
+                  {selectedLog.metadata && (
+                    <div>
+                      <div className="text-sm text-gray-400 mb-2">Metadata</div>
+                      <pre className="bg-gray-900 p-4 rounded text-sm overflow-x-auto text-gray-300">
                         {JSON.stringify(selectedLog.metadata, null, 2)}
                       </pre>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
