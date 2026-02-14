@@ -202,15 +202,3 @@ export class LogParser {
     return this.matches;
   }
 }
-  }
-
-  /**
-   * Parse multiple log entries from text
-   */
-  parseLogFile(content: string): LogEntry[] {
-    const lines = content.split('\n').filter(line => line.trim());
-    return lines
-      .map(line => this.parseLogEntry(line))
-      .filter((entry): entry is LogEntry => entry !== null);
-  }
-}

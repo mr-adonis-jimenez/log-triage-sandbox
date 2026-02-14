@@ -1,5 +1,5 @@
 // src/services/logTriage.service.ts
-import { LogEntry, TriageFilter, TriageAction, TriageStatus } from '../types/log.types';
+import { LogEntry, TriageFilter, TriageAction, TriageStatus } from './src/types/log';
 
 export class LogTriageService {
   private logs: Map<string, LogEntry> = new Map();

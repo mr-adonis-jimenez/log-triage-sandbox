@@ -23,3 +23,11 @@ export function parseLogLine(line: string): LogEvent | null {
     fingerprint,
   };
 }
+
+export function parseLogFile(content: string): LogEvent[] {
+  return content
+    .split('\n')
+    .filter(line => line.trim())
+    .map(line => parseLogLine(line))
+    .filter((entry): entry is LogEvent => entry !== null);
+}

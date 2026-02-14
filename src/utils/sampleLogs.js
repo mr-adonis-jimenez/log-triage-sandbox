@@ -125,6 +125,63 @@ export const logCategories = {
   all: allSampleLogs
 };
 
+const sampleServices = [
+  'AuthService', 'DatabaseService', 'PaymentGateway', 'APIGateway',
+  'CacheService', 'UserService', 'OrderService', 'SecurityScanner',
+  'BackupService', 'ConfigService', 'SessionManager', 'FileUpload'
+];
+
+const sampleMessages = {
+  ERROR: [
+    'Connection failed: ECONNREFUSED',
+    'Authentication failed for user',
+    'Transaction declined: Insufficient funds',
+    'Request timeout after 30s',
+    'Data import failed: Invalid format',
+  ],
+  WARN: [
+    'Cache miss rate exceeds threshold',
+    'Heap usage at 85%',
+    'Session pool nearing capacity',
+    'Deprecated API endpoint accessed',
+    'Slow query detected',
+  ],
+  INFO: [
+    'Application started successfully',
+    'New user registered',
+    'Order processed successfully',
+    'Health check passed',
+    'Configuration reloaded',
+  ],
+  DEBUG: [
+    'Route matched: GET /api/users/:id',
+    'Authentication middleware executed',
+    'SQL query generated',
+    'Response time: 45ms',
+    'Cache hit for key',
+  ],
+};
+
+const levels = ['ERROR', 'WARN', 'INFO', 'DEBUG'];
+
+export function generateSampleLogs(count) {
+  const logs = [];
+  const now = Date.now();
+
+  for (let i = 0; i < count; i++) {
+    const level = levels[Math.floor(Math.random() * levels.length)];
+    const service = sampleServices[Math.floor(Math.random() * sampleServices.length)];
+    const messages = sampleMessages[level];
+    const message = messages[Math.floor(Math.random() * messages.length)];
+    const timestamp = new Date(now - Math.random() * 86400000 * 7).toISOString();
+    const traceId = Math.random().toString(36).substring(2, 15);
+
+    logs.push({ timestamp, level, service, message, traceId });
+  }
+
+  return logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+}
+
 export default {
   sampleErrorLogs,
   sampleWarningLogs,
@@ -136,5 +193,6 @@ export default {
   sampleSecurityLogs,
   samplePerformanceLogs,
   allSampleLogs,
-  logCategories
+  logCategories,
+  generateSampleLogs
 };
