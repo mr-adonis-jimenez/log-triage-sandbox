@@ -1,7 +1,41 @@
 {
+  "name": "log-triage-sandbox",
+  "version": "1.0.0",
+  "description": "Interactive environment for experimenting with and analyzing application logs. Test log parsing, filtering, and pattern detection techniques.",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "triage": "ts-node scripts/triage.ts"
+    "triage": "ts-node scripts/triage.ts",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mr-adonis-jimenez/log-triage-sandbox.git"
+  },
+  "keywords": [
+    "log-analysis",
+    "log-parsing",
+    "triage",
+    "monitoring",
+    "debugging"
+  ],
+  "author": "mr-adonis-jimenez",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
